@@ -3,12 +3,16 @@ package com.example.order_service;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClient;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/orders")
 public class OrderController {
@@ -30,10 +34,15 @@ public class OrderController {
 	}
 
 	@GetMapping("/product/{id}")
-	public String getProduct(@PathVariable int id) {
-		return restClient.get()
-			.uri("/api/products/{id}", id)
-			.retrieve()
-			.body(String.class);
+	public ResponseEntity<String> getProduct(@PathVariable int id) {
+		try {
+			String product = restClient.get()
+				.uri("/api/products/{id}", id)
+				.retrieve()
+				.body(String.class);
+			return ResponseEntity.ok(product);
+		} catch (HttpClientErrorException.NotFound e) {
+			return ResponseEntity.notFound().build();
+		}
 	}
 }
