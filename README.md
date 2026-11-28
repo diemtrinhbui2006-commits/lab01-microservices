@@ -1,4 +1,4 @@
-# lab01-microservices / Coffee & Milk Tea Shop Management
+# buithidiemtrinh-microservices / Coffee & Milk Tea Shop Management
 
 Hệ thống Spring Boot Microservices: **Quản lý quán nước / Quán cà phê / Trà sữa**
 - **Sinh viên:** Bùi Thị Diễm Trinh
